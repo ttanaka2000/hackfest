@@ -1,32 +1,132 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Connector;
 
 namespace HackFest
 {
     [BotAuthentication]
     public class MessagesController : ApiController
-    {
+    {   
+
+        ////質問項目と回答
+        //public enum SandwichOptions
+        //{
+        //    RoastBeef, BLT, SubwayClub, RoastChicken,
+        //    TeriyakiChicken, TurkeyBreast, Ham, Tuna, VeggieDelite
+        //}
+        //public enum LengthOptions
+        //{
+        //    Regular, Footlong
+        //}
+        //public enum BreadOptions
+        //{
+        //    Flatbread, White, Wheat, Sesame, HoneyOats
+        //}
+        //public enum ToppingsOptions
+        //{
+        //    SliceCheese, CreamCheese, Bacon, Tuna, Avocado, Jalapeno, None
+        //}
+        //public enum VegetableLessOptions
+        //{
+        //    All, Lettuce, Tomato, Pement, Onion, Pickles, Olives, None
+        //}
+        //public enum VegetableMoreOptions
+        //{
+        //    All, Lettuce, Tomato, Pement, Onion, Pickles, Olives, None
+        //}
+        //public enum SauseOptions
+        //{
+        //    Caesar, HoneyMustard, WasabiSoy, Basil, Balsamico, Mayonnaise, OilVinegar
+        //}
+
+
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
         /// </summary>
-        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+        //public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+        //{
+        //    if (activity.Type == ActivityTypes.Message)
+        //    {
+        //        await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+        //    }
+        //    else
+        //    {
+        //        HandleSystemMessage(activity);
+        //    }
+        //    var response = Request.CreateResponse(HttpStatusCode.OK);
+        //    return response;
+        //}
+
+        public virtual async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            if (activity.Type == ActivityTypes.Message)
+            if (activity != null)
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                if (activity.GetActivityType() == ActivityTypes.Message)
+                {
+                    await Conversation.SendAsync(activity, () => new EhocDialog());
+                }
+                else
+                {
+                    HandleSystemMessage(activity);
+                }
+
             }
-            else
-            {
-                HandleSystemMessage(activity);
-            }
-            var response = Request.CreateResponse(HttpStatusCode.OK);
-            return response;
+            return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+
         }
+
+        [Serializable]
+        public class EhocDialog : IDialog<object>
+        {
+
+            protected int count = 1;
+            public async Task StartAsync(IDialogContext context)
+            {
+                context.Wait(MessageReceivedAsync);
+
+            }
+            public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> argument)
+            {
+                var message = await argument;
+
+                if (message.Text == "reset")
+                {
+                    PromptDialog.Confirm(context, ResetCountAsync,  "リセットしようか");
+                }
+                else
+                {
+                    await context.PostAsync(string.Format("会話{0}個目:{1}って言ったよね。",count++,message.Text));
+                    context.Wait(MessageReceivedAsync);
+                }
+
+
+            }
+            public async Task ResetCountAsync(IDialogContext context, IAwaitable<bool> argument)
+            {
+                var confirm = await argument;
+                if (confirm)
+                {
+                    this.count = 1;
+                    await context.PostAsync($"リセットしたよ");
+                }
+                else
+                {
+                    await context.PostAsync($"やめたよ");
+                }
+                context.Wait(MessageReceivedAsync);
+            }
+
+
+        }
+
+
 
         private Activity HandleSystemMessage(Activity message)
         {
