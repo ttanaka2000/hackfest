@@ -4,6 +4,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.FormFlow;
 using HackFest.Forms;
+using HackFest.Utilitys;
 
 namespace HackFest.Dialogs
 {
@@ -25,8 +26,12 @@ namespace HackFest.Dialogs
 
         public async Task ReturnFromSandwitchForm(IDialogContext context, IAwaitable<object> result)
         {
-            var customer = await result;
-            await context.PostAsync($"{SandwichOrder.RetailCode}");
+            string[] array = new string[2];
+            array[0] = "001";
+            array[1] = "001";
+            string stringJson = AccessEdiDb.AuthVendorId(array);
+            await context.PostAsync(stringJson);
+
             context.Wait(this.MessageReceivedAsync);
         }
 
