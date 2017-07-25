@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -29,7 +27,7 @@ namespace HackFest.App_Code
             inputarray[2] = this.vendorId;
 
             string procedureResult = AccessEdiDb.ExecProcedures(inputarray);
-            List<ResultVendorAuth> resultVendor = JsonConvert.DeserializeObject<List<ResultVendorAuth>>(procedureResult);
+            ResultVendorAuth resultVendor = JsonConvert.DeserializeObject<ResultVendorAuth>(procedureResult);
             this.responseJson = resultVendor.result;
 
         }

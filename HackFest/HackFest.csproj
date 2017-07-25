@@ -132,7 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\AccessEdiDb.cs" />
-    <Content Include="App_Code\Class1.cs" />
+    <Content Include="App_Code\VendorData.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomWebAPIController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
