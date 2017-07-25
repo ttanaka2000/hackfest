@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace HackFest.App_Code
+namespace HackFest
 {
     public class AccessEdiDb
     {

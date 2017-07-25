@@ -4,7 +4,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.FormFlow;
 using HackFest.Forms;
-using HackFest.App_Code;
+using HackFest;
 
 namespace HackFest.Dialogs
 {
@@ -81,6 +81,16 @@ namespace HackFest.Dialogs
         {
             var customer = await result;
             await context.PostAsync($"メニューに遷移します。");
+            
+            VendorData 
+
+
+
+
+
+
+
+
             string[] array = new string[3];
             array[0] = "dbo.authVendorId";
             array[1] = "001";
