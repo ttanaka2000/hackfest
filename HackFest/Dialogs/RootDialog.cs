@@ -12,24 +12,35 @@ namespace HackFest.Dialogs
     [Serializable]
     public class RootDialog : IDialog<object>
     {
-        public Task StartAsync(IDialogContext context)
+        //質問項目と回答
+        //小売りコードがあっているか
+        public enum RetailCode
         {
-            context.Wait(MessageReceivedAsync);
-
-            return Task.CompletedTask;
+            あっている, 間違っている
         }
-
-        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+    
+        [Serializable]
+        public class SandwichOrder(IDialogContext context)
         {
-            var activity = await result as Activity;
+            [Prompt("{&}をひとつお選びください{||}")]
+            //小売りコードがあっているか
+            public RetailCode? 小売りコード;
 
-            // calculate something for us to return
-            int length = (activity.Text ?? string.Empty).Length;
+            public static IForm<SandwichOrder> BuildForm()
+            {
+                return new FormBuilder<SandwichOrder>()
+                    //.Message("こんにちは! サンドウィッチショップです。ご注文を承ります！")
+                    .Field(nameof(小売りコード))
+                    .Build();
+            }
 
-            // return our reply to the user
-            await context.PostAsync($"You sent {activity.Text} which was {length} characters");
-
-            context.Wait(MessageReceivedAsync);
         }
+        //internal static IDialog<SandwichOrder> MakeRootDialog()
+        //{
+        //    return Chain.From(() =>
+        //        FormDialog.FromForm(SandwichOrder.BuildForm));
+        //}
+
+
     }
 }
