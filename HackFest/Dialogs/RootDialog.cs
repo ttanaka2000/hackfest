@@ -1,46 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web.Http;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Connector;
+using Microsoft.Bot.Builder.FormFlow;
+using HackFest.Forms;
+
 namespace HackFest.Dialogs
 {
     [Serializable]
     public class RootDialog : IDialog<object>
     {
-        //質問項目と回答
-        //小売りコードがあっているか
-        public enum RetailCode
+        public Task StartAsync(IDialogContext context)
         {
-            あっている, 間違っている
+            context.Wait(MessageReceivedAsync);
+            return Task.CompletedTask;
         }
-    
-        [Serializable]
-        public class SandwichOrder(IDialogContext context)
-        {
-            [Prompt("{&}をひとつお選びください{||}")]
-            //小売りコードがあっているか
-            public RetailCode? 小売りコード;
 
-            public static IForm<SandwichOrder> BuildForm()
-            {
-                return new FormBuilder<SandwichOrder>()
-                    //.Message("こんにちは! サンドウィッチショップです。ご注文を承ります！")
-                    .Field(nameof(小売りコード))
-                    .Build();
-            }
+        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+        {
+            // return our reply to the user
+            context.Call(FormDialog.FromForm(SandwichOrder.BuildForm, FormOptions.PromptInStart), this.ReturnFromSandwitchForm);
 
         }
-        //internal static IDialog<SandwichOrder> MakeRootDialog()
-        //{
-        //    return Chain.From(() =>
-        //        FormDialog.FromForm(SandwichOrder.BuildForm));
-        //}
+
+        public async Task ReturnFromSandwitchForm(IDialogContext context, IAwaitable<object> result)
+        {
+            var customer = await result;
+            await context.PostAsync($"{SandwichOrder.RetailCode}");
+            context.Wait(this.MessageReceivedAsync);
+        }
 
 
     }
+
+
+
+
+
 }
