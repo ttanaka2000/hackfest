@@ -27,7 +27,8 @@ namespace HackFest.Dialogs
             inputarray[2] = this.vendorId;
 
             string procedureResult = AccessEdiDb.ExecProcedures(inputarray);
-            ResultVendorAuth resultVendor = JsonConvert.DeserializeObject<ResultVendorAuth>(procedureResult);
+            var editResult = procedureResult.Split(new Char[] { '[', ']' });
+            ResultVendorAuth resultVendor = JsonConvert.DeserializeObject<ResultVendorAuth>(editResult[1]);
             this.responseJson = resultVendor.result;
 
         }

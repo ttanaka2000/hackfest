@@ -59,10 +59,10 @@ namespace HackFest.Dialogs
         //    public Qaregst
 
         //}
-        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
         {
             // return our reply to the user
-            context.Call(FormDialog.FromForm(EntryRetailCode.BuildForm, FormOptions.PromptInStart), this.ReturnFromSandwitchForm);
+            context.Call(FormDialog.FromForm(EntryCode.BuildForm, FormOptions.PromptInStart), this.ReturnFromSandwitchForm);
             //１、呼ぶダイアログ　２、呼んだあとどこにとばすか
 
             var message = await result;
