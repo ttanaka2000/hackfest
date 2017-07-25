@@ -2,9 +2,9 @@
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using HackFest.App_Code;
+using HackFest.Dialogs;
 
-namespace HackFest
+namespace HackFest.Dialogs
 {
     public class VendorData
     {
@@ -13,13 +13,13 @@ namespace HackFest
         public string responseJson { get; set; }
 
         //コンストラクタ
-        private VendorData(string[] args)
+        public VendorData(string[] args)
         {
             this.retailId = args[0];
             this.vendorId = args[1];
         }
 
-        private void AuthVendorId()
+        public void AuthVendorId()
         {
             string[] inputarray = new string[3];
             inputarray[0] = "dbo.authVendorId";
