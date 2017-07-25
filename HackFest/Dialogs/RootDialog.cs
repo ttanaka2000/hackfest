@@ -22,12 +22,13 @@ namespace HackFest.Dialogs
         {
             初めて,初めてではない
         }
-        [Serializable]
-        public class  Regist
-        {
-            [Prompt("{&}を行う項目を選んでください{ll}")]
-            public Qaregst
+        //[Serializable]
+        //public class Regist
+        //{
+        //    [Prompt("{&}を行う項目を選んでください{ll}")]
+        //    public Qaregst
 
+        //}
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
             // return our reply to the user
@@ -39,10 +40,11 @@ namespace HackFest.Dialogs
         {
             var customer = await result;
             await context.PostAsync($"メニューに遷移します。");
-            string[] array = new string[2];
-            array[0] = "001";
+            string[] array = new string[3];
+            array[0] = "dbo.authVendorId";
             array[1] = "001";
-            string stringJson = AccessEdiDb.AuthVendorId(array);
+            array[2] = "001";
+            string stringJson = AccessEdiDb.ExecProcedures(array);
             await context.PostAsync(stringJson);
 
             context.Wait(this.MessageReceivedAsync);
