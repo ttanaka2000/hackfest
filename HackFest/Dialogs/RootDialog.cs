@@ -16,6 +16,17 @@ namespace HackFest.Dialogs
             return Task.CompletedTask;
         }
 
+        //質問項目と回答
+        public enum Qaregst
+        {
+            初めて,初めてではない
+        }
+        [Serializable]
+        public class  Regist
+        {
+            [Prompt("{&}を行う項目を選んでください{ll}")]
+            public Qaregst
+
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
             // return our reply to the user
