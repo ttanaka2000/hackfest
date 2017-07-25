@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace HackFest.Utilitys
+namespace HackFest.App_Code
 {
-
     public class AccessEdiDb
     {
 
@@ -42,53 +38,4 @@ namespace HackFest.Utilitys
         }
     }
 
-
-public class AuthVendorId
-{
-    private string retailId
-    {
-        set { this.retailId = value; }
-        get { return this.retailId; }
-    }
-
-    private string vendorId
-    {
-        set { this.vendorId = value; }
-        get { return this.retailId; }
-    }
-
-    private string result
-    {
-        get { return this.result; }
-    }
-
-    AuthVendorId(string[] arg)
-    {
-        this.retailId = arg[0];
-        this.vendorId = arg[1];
-    }
-
-    void Main()
-    {
-        string[] inputarray = new string[3];
-        inputarray[0] = "dbo.authVendorId";
-        inputarray[1] = this.retailId;
-        inputarray[2] = this.vendorId;
-
-        string responseJson = AccessEdiDb.ExecProcedures(inputarray);
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-}
 }

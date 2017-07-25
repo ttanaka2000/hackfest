@@ -131,12 +131,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\AccessEdiDb.cs" />
+    <Content Include="App_Code\Class1.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CustomWebAPIController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="ConversationStarter.cs" />
     <Compile Include="Dialogs\MainMenu.cs" />
-    <Compile Include="Dialogs\AccessEdiDB.cs" />
     <Compile Include="Dialogs\registNerUser.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
