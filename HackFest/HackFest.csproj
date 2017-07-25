@@ -140,6 +140,7 @@
     <Compile Include="Dialogs\registNerUser.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Dialogs\VendorData.cs" />
+    <Compile Include="Dialogs\Entry.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
