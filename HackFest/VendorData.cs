@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using HackFest.App_Code;
 
-namespace HackFest.App_Code
+namespace HackFest
 {
     public class VendorData
     {
