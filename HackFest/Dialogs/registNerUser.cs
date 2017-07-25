@@ -21,20 +21,34 @@ namespace HackFest.Forms
     }
 
     [Serializable]
-    public class EntryRetailCode
+    public class EntryCode
     {
         [Prompt("{&}をひとつお選びください{||}")]
         //小売りコードがあっているか
         public RetailCode? 小売りコード;
+        public VendorCode? 取引先コード;
 
-        public static IForm<EntryRetailCode> BuildForm()
+        public static IForm<EntryCode> BuildForm()
         {
-            return new FormBuilder<EntryRetailCode>()
-                //.Message("こんにちは! サンドウィッチショップです。ご注文を承ります！")
+            return new FormBuilder<EntryCode>()
                 .Field(nameof(小売りコード))
                 .Build();
+
         }
+        public static IForm<EntryCode> BuildForm2()
+        {
+            return new FormBuilder<EntryCode>()
+                .Field(nameof(取引先コード))
+                .Build();
+
+            //while文（取引先コードがDBに存在しなかったらループする）
+            //while()
+
+        }
+
     }
-    //小売りコードがあってるかの条件分岐と取引先コードを入力させる
+
+
+
 
 }
