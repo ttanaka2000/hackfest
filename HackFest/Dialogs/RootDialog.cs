@@ -19,14 +19,14 @@ namespace HackFest.Dialogs
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
             // return our reply to the user
-            context.Call(FormDialog.FromForm(SandwichOrder.BuildForm, FormOptions.PromptInStart), this.ReturnFromSandwitchForm);
-
+            context.Call(FormDialog.FromForm(EntryRetailCode.BuildForm, FormOptions.PromptInStart), this.ReturnFromSandwitchForm);
+            //１、呼ぶダイアログ　２、呼んだあとどこにとばすか
         }
 
         public async Task ReturnFromSandwitchForm(IDialogContext context, IAwaitable<object> result)
         {
             var customer = await result;
-            await context.PostAsync($"{SandwichOrder.RetailCode}");
+            await context.PostAsync($"メニューに遷移します。");
             context.Wait(this.MessageReceivedAsync);
         }
 

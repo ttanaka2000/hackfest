@@ -15,20 +15,26 @@ namespace HackFest.Forms
     {
         あっている, 間違っている
     }
+    public enum VendorCode
+    {
+        あっている, 間違っている
+    }
 
     [Serializable]
-    public class SandwichOrder
+    public class EntryRetailCode
     {
         [Prompt("{&}をひとつお選びください{||}")]
         //小売りコードがあっているか
         public RetailCode? 小売りコード;
 
-        public static IForm<SandwichOrder> BuildForm()
+        public static IForm<EntryRetailCode> BuildForm()
         {
-            return new FormBuilder<SandwichOrder>()
+            return new FormBuilder<EntryRetailCode>()
                 //.Message("こんにちは! サンドウィッチショップです。ご注文を承ります！")
                 .Field(nameof(小売りコード))
                 .Build();
         }
     }
+    //小売りコードがあってるかの条件分岐と取引先コードを入力させる
+
 }
