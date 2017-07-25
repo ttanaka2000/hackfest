@@ -13,6 +13,11 @@ namespace HackFest
     [Serializable]
     public class Entry : IDialog<object>
     {
+        public Task StartAsync(IDialogContext context)
+        {
+            context.Wait(MessageReceivedAsync);
+            return Task.CompletedTask;
+        }
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
             // return our reply to the user
@@ -33,12 +38,14 @@ namespace HackFest
                 context.Call(FormDialog.FromForm(EntryCode.BuildForm, FormOptions.PromptInStart), this.MessageReceivedAsync);
             }
             context.Call(FormDialog.FromForm(EntryCode.BuildForm2, FormOptions.PromptInStart), this.ReturnFromEntryCodeForm);
+
         }
 
         public async Task ReturnFromEntryCodeForm(IDialogContext context, IAwaitable<object> result)
         {
             var customer = await result;
             await context.PostAsync($"メニューに遷移します。");
+            //メニューへ遷移させる
             context.Wait(this.MessageReceivedAsync);
         }
     }
