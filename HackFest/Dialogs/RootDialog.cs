@@ -53,11 +53,22 @@ namespace HackFest.Dialogs
                     }
             }*/
 
-        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
         {
             // return our reply to the user
             context.Call(FormDialog.FromForm(EntryRetailCode.BuildForm, FormOptions.PromptInStart), this.ReturnFromSandwitchForm);
             //１、呼ぶダイアログ　２、呼んだあとどこにとばすか
+
+            var message = await result;
+
+            //We need to keep this data so we know who to send the message to. Assume this would be stored somewhere, e.g. an Azure Table
+            ConversationStarter.toId = message.From.Id;
+            ConversationStarter.toName = message.From.Name;
+            ConversationStarter.fromId = message.Recipient.Id;
+            ConversationStarter.fromName = message.Recipient.Name;
+            ConversationStarter.serviceUrl = message.ServiceUrl;
+            ConversationStarter.channelId = message.ChannelId;
+            ConversationStarter.conversationId = message.Conversation.Id;
         }
 
         public async Task ReturnFromSandwitchForm(IDialogContext context, IAwaitable<object> result)
