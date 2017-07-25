@@ -37,7 +37,7 @@ namespace HackFest.Dialogs
         {
             public string result { get; set; }
             public string retailId { get; set; }
-            public string rendorId { get; set; }
+            public string vendorId { get; set; }
         }
     }
 }
