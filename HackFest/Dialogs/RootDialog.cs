@@ -18,15 +18,40 @@ namespace HackFest.Dialogs
         }
 
         //質問項目と回答
-        public enum Qaregst
+        public enum Qaregist
         {
             初めて,初めてではない
         }
+
         [Serializable]
+        public class Regist
+        {
+            [Prompt("{&}を行う項目を選んでください{||}")]
+            public Qaregist? 登録;
+
+            public static IForm<Regist> BuildForm()
+            {
+                return new FormBuilder<Regist>()
+                    .Message("こんにちは,セゾン情報システムズ様ですね！ ")
+                    .Field(nameof(登録))
+                    .Build();
+            }
+
+        }
+
+        /*[Serializable]
         public class  Regist
         {
             [Prompt("{&}を行う項目を選んでください{ll}")]
-            public Qaregst
+            public Qaregst? 登録;
+
+            public static IForm<Regist> BuildForm()
+            {
+                return new FormBuilder<Regist>()
+                    .Message("こんにちは")
+                    .Field(nameof(登録))
+                    }
+            }*/
 
         private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
         {
