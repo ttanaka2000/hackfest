@@ -4,7 +4,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.FormFlow;
 using HackFest.Forms;
-using HackFest;
+using HackFest.Models;
 
 namespace HackFest.Dialogs
 {
@@ -81,31 +81,18 @@ namespace HackFest.Dialogs
         {
             var customer = await result;
             await context.PostAsync($"メニューに遷移します。");
-            
-            VendorData 
 
-
-
-
-
-
-
-
-            string[] array = new string[3];
-            array[0] = "dbo.authVendorId";
+            string[] array = new string[2];
+            array[0] = "001";
             array[1] = "001";
-            array[2] = "001";
-            string stringJson = AccessEdiDb.ExecProcedures(array);
-            await context.PostAsync(stringJson);
+            VendorData vendordata = new VendorData(array);
+            vendordata.AuthVendorId();
+            await context.PostAsync(vendordata.responseJson);
 
             context.Wait(this.MessageReceivedAsync);
         }
 
 
     }
-
-
-
-
-
+    
 }
